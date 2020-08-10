@@ -1,14 +1,13 @@
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
-
 public class Person {
 
     private String name;
     private String job;
     private int id;
     private String createdAt;
+    private String updatedAt;
 
     public Person(String name,String job){
         this.name = name;
@@ -52,5 +51,13 @@ public class Person {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

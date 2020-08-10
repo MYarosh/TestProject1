@@ -11,13 +11,12 @@
     <properties>
         <argLine>-Xset:weaveJavaxPackages=true</argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.10</maven.compiler.source>
-        <maven.compiler.target>1.10</maven.compiler.target>
         <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-testng.version>2.13.5</allure-testng.version>
-
     </properties>
+
+
 
 <dependencies>
     <dependency>
@@ -72,7 +71,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" </argLine>
+                    <suiteXmlFiles>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <suiteXmlFile>${suiteXMLFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>
