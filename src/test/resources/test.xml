@@ -2,9 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="REST_API_Test" verbose="3" parallel="false">
     <test name="REST_API_Test">
-        <parameter name="name" value="TestUser"/>
-        <parameter name="job" value="QA Automation Engineer"/>
-        <parameter name="newJob" value="Senior QA Automation Engineer"/>
         <classes>
             <class name="REST_API_Test"/>
         </classes>

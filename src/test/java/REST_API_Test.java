@@ -1,5 +1,5 @@
 import org.apache.http.HttpStatus;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -11,13 +11,22 @@ import static org.testng.Assert.*;
 public class REST_API_Test {
     private Person person;
     private List<Person> list = new ArrayList<Person>();
+    private Reader reader;
+    private String name, job, newJob;
+
+    @BeforeClass
+    public void prepare(){
+        reader = new Reader();
+        name = reader.getName();
+        job = reader.getJob();
+        newJob = reader.getNewJob();
+    }
 
     /*
     Create user with name and job
      */
-    @Parameters({"name", "job"})
     @Test(priority = 0)
-    public void createUser(String name, String job){
+    public void createUser(){
          person = new Person(name,job);
          person = given()
                  .contentType("application/json").body(person)
@@ -26,7 +35,7 @@ public class REST_API_Test {
                  .statusCode(HttpStatus.SC_CREATED).and().extract().body().as(Person.class);
          assertEquals(person.getJob(), job);
          assertEquals(person.getName(), name);
-         System.out.println("Test createUser. Complete.");
+         System.out.println("[INFO] Test createUser. Complete.");
     }
 
     /*
@@ -39,7 +48,7 @@ public class REST_API_Test {
                 .then()
                 .statusCode(HttpStatus.SC_OK).and().extract().body().jsonPath().getList("$.data", Person.class);
         assertNotNull(list);
-        System.out.println("Test getListUsers. Complete.");
+        System.out.println("[INFO] Test getListUsers. Complete.");
     }
 
     /*
@@ -49,15 +58,14 @@ public class REST_API_Test {
     public void checkUser(){
         boolean b = list.contains(person);
         assertTrue(b);
-        System.out.println("Test checkUser. Complete.");
+        System.out.println("[INFO] Test checkUser. Complete.");
     }
 
     /*
     Update job of user
      */
-    @Parameters({"newJob"})
     @Test(priority = 3)
-    public void updateUser(String newJob){
+    public void updateUser(){
         person.setJob(newJob);
         person = given()
                 .contentType("application/json").body(person)
@@ -66,7 +74,7 @@ public class REST_API_Test {
                 .then()
                 .statusCode(HttpStatus.SC_OK).and().extract().body().as(Person.class);
         assertEquals(person.getJob(), newJob);
-        System.out.println("Test updateUser. Complete.");
+        System.out.println("[INFO] Test updateUser. Complete.");
     }
 
     /*
@@ -78,6 +86,6 @@ public class REST_API_Test {
                 .when().delete("https://reqres.in/api/users/{id}")
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
-        System.out.println("Test deleteUser. Complete.");
+        System.out.println("[INFO] Test deleteUser. Complete.");
     }
 }
