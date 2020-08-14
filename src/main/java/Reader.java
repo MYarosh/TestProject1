@@ -8,7 +8,12 @@ public class Reader {
      */
     public Reader(){
         try{
-            File file = new File(System.getProperty("user.dir") + "\\src\\test\\resources\\configure");
+            File file;
+            if (isWindows()){
+                file = new File(System.getProperty("user.dir") + "\\src\\test\\resources\\configure");
+            }else {
+                file = new File(System.getProperty("user.dir") + "/src/test/resources/configure");
+            }
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             String line = reader.readLine();
@@ -65,5 +70,12 @@ public class Reader {
 
     public String getNewJob() {
         return newJob;
+    }
+
+    public static boolean isWindows(){
+
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.contains("win"));
+
     }
 }
